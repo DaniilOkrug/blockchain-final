@@ -1,0 +1,26 @@
+.article-page-container,
+.article-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.article-page-container {
+    overflow: hidden;
+    padding-bottom: var(--bottom-padding);
+}
+
+.article-wrapper {
+    overflow: auto;
+}
+
+.article-title {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.back-button {
+    position: fixed;
+    bottom: calc(var(--bottom-padding) * 0.25);
+    left: 50%;
+    transform: translateX(-50%);
+}

@@ -1,0 +1,17 @@
+:root {
+    --horizontal-padding: 18%;
+    --top-padding: 30px;
+    --bottom-padding: 70px;
+}
+
+.wrap-string {
+    word-break: break-word !important;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important; 
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    padding: var(--top-padding) var(--horizontal-padding) 0;
+}
