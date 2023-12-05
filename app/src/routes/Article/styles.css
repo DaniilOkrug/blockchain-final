@@ -18,6 +18,10 @@
     font-size: 20px;
 }
 
+.article-text {
+    font-size: 16px;
+}
+
 .back-button {
     position: fixed;
     bottom: calc(var(--bottom-padding) * 0.25);
