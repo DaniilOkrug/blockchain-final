@@ -33,14 +33,15 @@ export const RootPage = () => {
         if (typeof length != 'number') {
           throw new Error('expected getArticlesLength() to return number')
         }
+
         setTotalItems(length)
         if (length === 0) {
           setCurrentPage(0)
+        } else {
+          const to = length
+          const from = Math.max(length - pageSize, 0)
+          await fetchArticles(from, to)
         }
-
-        const from = Math.max(length - pageSize, 0)
-        const to = Math.min(from + pageSize, length)
-        await fetchArticles(from, to)
       } catch (error) {
         const message = (error as any).message ?? 'Failed to load articles'
         setError(message)
@@ -67,7 +68,6 @@ export const RootPage = () => {
   }, [])
 
   const fetchArticles = async (from: number, to: number) => {
-    console.log(`fetch ${from} - ${to}`)
     try {
       const indexes: number[] = []
       for (let i = from; i < to; i++) {
@@ -77,7 +77,6 @@ export const RootPage = () => {
       const promises = indexes.map(fetchArticle)
       const articles = await Promise.all(promises)
 
-      console.log('articles', articles)
       setArticles(articles)
     } catch (error) {
       const message = (error as any).message ?? 'Failed to load articles'
@@ -116,13 +115,14 @@ export const RootPage = () => {
       })
     } finally {
       setGlobalLoading(false)
+      window.location.reload()
     }
   }
 
   const onChangePage = (page: number) => {
     setCurrentPage(page)
-    const from = Math.max(totalItems - page * pageSize, 0)
-    const to = Math.min(from + pageSize, totalItems)
+    const to = Math.max(totalItems - (page - 1) * pageSize, 0)
+    const from = Math.max(to - pageSize, 0)
     fetchArticles(from, to)
   }
 
@@ -138,7 +138,7 @@ export const RootPage = () => {
     const convertedEtherPrice = web3.utils.fromWei(ethPrice, 'ether')
 
     const titleBlock = (
-      <Flex vertical gap={5}>
+      <Flex vertical gap={5} className='title-block'>
         <Typography.Title level={3} className='zero-margin wrap-string'>
           {title}
         </Typography.Title>
